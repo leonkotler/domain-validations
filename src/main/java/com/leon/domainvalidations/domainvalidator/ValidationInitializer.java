@@ -27,6 +27,11 @@ public class ValidationInitializer {
             ValidationFactory.validations.putIfAbsent(classOfValidatedEntity, new HashSet<>());
             //noinspection unchecked
             ValidationFactory.validations.get(classOfValidatedEntity).add((DomainValidation<Validatable>) validation);
+            /*  The downcast is okay because:
+                1. Spring will only inject the correct correct beans of DomainValidation<? extends Validatable>
+                2. Validatable is the actual interface that we want to put as the generic type of DomainValidation,
+                   so this upper bound is just fine.
+             */
         });
     }
 
@@ -35,9 +40,8 @@ public class ValidationInitializer {
         try {
             return Class.forName(entityToValidateType.getTypeName());
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Couldn't retrieve the class of " + entityToValidateType.getTypeName(), e);
         }
-        return null;
     }
 
 
