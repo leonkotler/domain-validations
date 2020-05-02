@@ -43,6 +43,4 @@ public class ValidationInitializer {
             throw new RuntimeException("Couldn't retrieve the class of " + entityToValidateType.getTypeName(), e);
         }
     }
-
-
 }

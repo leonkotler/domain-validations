@@ -1,5 +1,5 @@
 package com.leon.domainvalidations.domainvalidator;
 
 public enum Status {
-    PASSED, FAILED, SKIPPED
+    PASSED, FAILED
 }

@@ -31,6 +31,4 @@ public class UserAgeValidation implements DomainValidation<User> {
     public boolean shouldExecute(User validationTarget) {
         return true;
     }
-
-
 }

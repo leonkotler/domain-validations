@@ -19,8 +19,8 @@ public interface Validatable {
                 .filter(validation -> validation.shouldExecute(this))
                 .filter(validation ->
                         requestType.equals(RequestType.ANY) ||
-                        validation.applicableRequestTypes().contains(RequestType.ANY) ||
-                        validation.applicableRequestTypes().contains(requestType))
+                                validation.applicableRequestTypes().contains(RequestType.ANY) ||
+                                validation.applicableRequestTypes().contains(requestType))
                 .forEach(validation -> validationsResults.addValidationResult(validation.validate(this)));
 
         return validationsResults;
