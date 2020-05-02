@@ -12,14 +12,19 @@ import java.util.Set;
 public class UserNameValidation implements DomainValidation<User> {
 
     @Override
-    public ValidationResult<User> validate(User target) {
+    public ValidationResult<User> validate(User validationTarget) {
         return ValidationResult
-                .of(target)
+                .of(validationTarget)
                 .check(e -> e.getName().equals("Leon"), "Wrong Name!");
     }
 
     @Override
-    public Set<RequestType> eligibleFor() {
+    public Set<RequestType> applicableRequestTypes() {
         return Set.of(RequestType.ANY);
+    }
+
+    @Override
+    public boolean shouldExecute(User validationTarget) {
+        return true;
     }
 }

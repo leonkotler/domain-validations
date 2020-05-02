@@ -14,16 +14,23 @@ import java.util.Set;
 public class UserAgeValidation implements DomainValidation<User> {
 
     @Override
-    public ValidationResult<User> validate(User target) {
-        if (target.getAge() > 18) {
-            return ValidationResult.of(target).passed();
+    public ValidationResult<User> validate(User validationTarget) {
+        if (validationTarget.getAge() > 18) {
+            return ValidationResult.of(validationTarget).passed();
         } else {
-            return ValidationResult.of(target).failed("Age must be greater than 18!");
+            return ValidationResult.of(validationTarget).failed("Age must be greater than 18!");
         }
     }
 
     @Override
-    public Set<RequestType> eligibleFor() {
+    public Set<RequestType> applicableRequestTypes() {
         return Set.of(RequestType.CREATE, RequestType.UPDATE);
     }
+
+    @Override
+    public boolean shouldExecute(User validationTarget) {
+        return true;
+    }
+
+
 }

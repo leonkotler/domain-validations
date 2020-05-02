@@ -2,13 +2,14 @@ package com.leon.domainvalidations.domainvalidator;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ValidationsResults {
 
     private Status status = Status.PASSED;
+
     private final List<ValidationResult<? extends Validatable>> passedValidations = new LinkedList<>();
     private final List<ValidationResult<? extends Validatable>> failedValidations = new LinkedList<>();
-    private final List<ValidationResult<? extends Validatable>> skippedValidations = new LinkedList<>();
 
     void addValidationResult(ValidationResult<? extends Validatable> validationResult) {
         switch (validationResult.getStatus()) {
@@ -19,14 +20,19 @@ public class ValidationsResults {
             case PASSED:
                 passedValidations.add(validationResult);
                 break;
-            case SKIPPED:
-                skippedValidations.add(validationResult);
-                break;
         }
     }
 
     public Status getStatus() {
         return status;
+    }
+
+    public boolean isFailed() {
+        return status.equals(Status.FAILED);
+    }
+
+    public boolean isPassed() {
+        return status.equals(Status.PASSED);
     }
 
     public List<ValidationResult<? extends Validatable>> getPassedValidations() {
@@ -37,7 +43,8 @@ public class ValidationsResults {
         return failedValidations;
     }
 
-    public List<ValidationResult<? extends Validatable>> getSkippedValidations() {
-        return skippedValidations;
+    public List<String> getFailureMessages() {
+        return failedValidations.stream().map(ValidationResult::getMessage).collect(Collectors.toList());
     }
+
 }

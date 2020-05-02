@@ -37,12 +37,6 @@ public class ValidationResult<T> {
         return this;
     }
 
-    public ValidationResult<T> skipped(String skipReason) {
-        this.setStatus(Status.SKIPPED);
-        this.setMessage(skipReason);
-        return this;
-    }
-
     public T getEntity() {
         return entity;
     }
